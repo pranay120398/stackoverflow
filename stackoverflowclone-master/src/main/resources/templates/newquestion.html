@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>New Question</title>
+    <link  th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="ques-item">
+<form th:action="@{/postQuestion}" th:object="${question}" method="post">
+    <label>Question Title</label><br>
+    <input type="text" name="title" th:field="*{title}" placeholder="type your question here">
+    <br>
+    <label>Question Body</label><br>
+    <textarea name="body" th:field="*{description}" placeholder="describe more here" rows="10" cols="20"></textarea>
+    <br>
+    <label>Tags</label>
+    <input type="text" name="tags" th:field="*{tag}" placeholder="assign tags related to title">
+    <br>
+    <button type="submit">Post Question</button>
+</form>
+</div>
+</body>
+</html>

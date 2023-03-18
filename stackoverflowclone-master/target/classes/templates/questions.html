@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div>
+
+    <a th:href="@{'/sort/' + '?sortField=createDate&sortDir=' + ${reverseSortDir}}">
+        Sort by published date
+    </a>
+    <br>
+    <a th:href="@{'/sort/' + '?sortField=title&sortDir=' + ${reverseSortDir}}">
+        Sort by Question
+    </a>
+
+</div>
+
+<div>
+    <span>
+        <form th:action="@{/search}">
+            <input type="text" placeholder="search a keyword" name="searchBar">
+            <input type="submit" value="Search">
+        </form>
+    </span>
+</div>
+
+<!--<th:block th:if="${admin} OR ${user!=null}">-->
+    <div class="header">
+        <a th:href="@{/new}"> New Question </a>
+    </div>
+<!--</th:block>-->
+<div class="row col-sm-1" sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="btn btn-primary btn-sm mb-3">
+    Login </a></div>
+
+<div class="row col-sm-1"><span sec:authorize="isAuthenticated()"><a th:href="@{/logout}"
+                                                                     class="btn btn-primary btn-sm mb-3">Logout</a></span>
+</div>
+<div>
+    <a th:href="@{/users}">Users</a>
+</div>
+<div class="row col-sm-1" sec:authorize="!isAuthenticated()"><a th:href="@{/login}" class="btn btn-primary btn-sm mb-3"> Login </a></div>
+
+<div class="row col-sm-1"><span sec:authorize="isAuthenticated()"><a th:href="@{/logout}" class="btn btn-primary btn-sm mb-3">Logout</a></span></div>
+
+<div class="container">
+    <th:block th:each="question : ${listQuestions}">
+        <div class="ques-item">
+            <div>
+                <a th:href="@{/questions/{id}(id=${question.questionId})}">[[${question.title}]]</a>
+            </div>
+            <span th:each="tag : ${question.tags}">
+                  <span>[[${tag.tagName}]]</span> &nbsp; &nbsp;
+            </span>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>
